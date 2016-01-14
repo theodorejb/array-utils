@@ -48,4 +48,40 @@ class ArrayUtilsTest extends PHPUnit_Framework_TestCase
 
         $this->assertSame($expected, $actual);
     }
+
+    public function testGroupRowsFalsyGroupValues()
+    {
+        $rows = [
+            ['name' => null, 'petName' => 'Blackie'],
+            ['name' => null, 'petName' => 'Whiskers'],
+            ['name' => false, 'petName' => 'Scruffy'],
+            ['name' => false, 'petName' => 'Spot'],
+            ['name' => 0, 'petName' => 'Paws'],
+            ['name' => 0, 'petName' => 'Claws'],
+            ['name' => '', 'petName' => 'Puffball'],
+            ['name' => '', 'petName' => 'Tinker'],
+        ];
+
+        $expected = [
+            [$rows[0], $rows[1]],
+            [$rows[2], $rows[3]],
+            [$rows[4], $rows[5]],
+            [$rows[6], $rows[7]],
+        ];
+
+        $actual = [];
+
+        foreach (ArrayUtils\group_rows($rows, 'name') as $group) {
+            $actual[] = $group;
+        }
+
+        $this->assertSame($expected, $actual);
+    }
+
+    public function testGroupRowsEmptyArray()
+    {
+        foreach (ArrayUtils\group_rows([], 'test') as $group) {
+            $this->fail('Empty array incorrectly resulted in yield');
+        }
+    }
 }

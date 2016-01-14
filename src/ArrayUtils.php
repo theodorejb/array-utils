@@ -44,11 +44,11 @@ function contains_same(array $a, array $b)
  */
 function group_rows(array $rows, $groupColumn)
 {
-    $divideColVal = false; // default
+    $divideColVal = null;
     $itemSet = [];
 
     foreach ($rows as $row) {
-        if ($divideColVal === false || $divideColVal !== $row[$groupColumn]) {
+        if ($divideColVal !== $row[$groupColumn]) {
             // new set of items
 
             if (!empty($itemSet)) {
