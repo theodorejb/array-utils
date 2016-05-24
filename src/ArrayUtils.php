@@ -2,6 +2,8 @@
 
 namespace theodorejb\ArrayUtils;
 
+use Traversable;
+
 /**
  * Returns true if all the needles are in the haystack
  *
@@ -38,12 +40,17 @@ function contains_same(array $a, array $b)
  * Splits the array of rows into groups when the specified column value changes.
  * Note that the rows must be sorted by the column used to divide results.
  *
- * @param array $rows
+ * @param array | Traversable $rows
  * @param string $groupColumn
  * @return \Iterator
+ * @throws \Exception if $rows is not an array or Traversable
  */
-function group_rows(array $rows, $groupColumn)
+function group_rows($rows, $groupColumn)
 {
+    if (!is_array($rows) && !$rows instanceof Traversable) {
+        throw new \Exception('$rows must be array or Traversable');
+    }
+
     $divideColVal = null;
     $itemSet = [];
 

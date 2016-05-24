@@ -84,4 +84,33 @@ class ArrayUtilsTest extends PHPUnit_Framework_TestCase
             $this->fail('Empty array incorrectly resulted in yield');
         }
     }
+
+    public function testGroupRowsTraversable()
+    {
+        $generate = function () {
+            for ($i = 0; $i < 4; $i++) {
+                $set = $i < 2 ? 1 : 2;
+                yield ['set' => $set, 'i' => $i];
+            }
+        };
+
+        $groups = [];
+
+        foreach (ArrayUtils\group_rows($generate(), 'set') as $group) {
+            $groups[] = $group;
+        }
+
+        $expected = [
+            [
+                ['set' => 1, 'i' => 0],
+                ['set' => 1, 'i' => 1],
+            ],
+            [
+                ['set' => 2, 'i' => 2],
+                ['set' => 2, 'i' => 3],
+            ],
+        ];
+
+        $this->assertSame($expected, $groups);
+    }
 }
