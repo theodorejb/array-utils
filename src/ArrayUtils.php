@@ -1,17 +1,13 @@
 <?php
 
-namespace theodorejb\ArrayUtils;
+declare(strict_types=1);
 
-use Traversable;
+namespace theodorejb\ArrayUtils;
 
 /**
  * Returns true if all the needles are in the haystack
- *
- * @param array $needles
- * @param array $haystack
- * @return bool
  */
-function contains_all(array $needles, array $haystack)
+function contains_all(array $needles, array $haystack): bool
 {
     // return false if any of the needles aren't in the haystack
     foreach ($needles as $needle) {
@@ -26,12 +22,8 @@ function contains_all(array $needles, array $haystack)
 /**
  * Returns true if the two arrays contain exactly the same values
  * (not necessarily in the same order)
- *
- * @param array $a
- * @param array $b
- * @return bool
  */
-function contains_same(array $a, array $b)
+function contains_same(array $a, array $b): bool
 {
     return contains_all($a, $b) && contains_all($b, $a);
 }
@@ -39,18 +31,9 @@ function contains_same(array $a, array $b)
 /**
  * Splits the array of rows into groups when the specified column value changes.
  * Note that the rows must be sorted by the column used to divide results.
- *
- * @param array | Traversable $rows
- * @param string $groupColumn
- * @return \Iterator
- * @throws \Exception if $rows is not an array or Traversable
  */
-function group_rows($rows, $groupColumn)
+function group_rows(iterable $rows, string $groupColumn): \Generator
 {
-    if (!is_array($rows) && !$rows instanceof Traversable) {
-        throw new \Exception('$rows must be array or Traversable');
-    }
-
     $divideColVal = null;
     $itemSet = [];
 

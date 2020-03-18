@@ -38,8 +38,8 @@ echo contains_same($set1, $set2); // true
 
 ### group_rows
 
-Splits the array of associative arrays into groups when the specified key value changes.
-The array must be sorted by the array key used to group results.
+Splits the iterable of associative arrays into groups when the specified key
+value changes. The iterable must be sorted by the array key used to group results.
 
 ```php
 use function theodorejb\ArrayUtils\group_rows;
@@ -77,7 +77,7 @@ var_dump($grouped === $expected); // bool(true)
 ## Author
 
 Theodore Brown  
-<http://theodorejb.me>
+<https://theodorejb.me>
 
 ## License
 

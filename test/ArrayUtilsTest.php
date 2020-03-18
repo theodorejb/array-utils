@@ -1,8 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
+use PHPUnit\Framework\TestCase;
 use theodorejb\ArrayUtils;
 
-class ArrayUtilsTest extends PHPUnit_Framework_TestCase
+class ArrayUtilsTest extends TestCase
 {
     public function testContainsAll()
     {
@@ -80,6 +83,8 @@ class ArrayUtilsTest extends PHPUnit_Framework_TestCase
 
     public function testGroupRowsEmptyArray()
     {
+        $this->expectNotToPerformAssertions();
+
         foreach (ArrayUtils\group_rows([], 'test') as $group) {
             $this->fail('Empty array incorrectly resulted in yield');
         }
