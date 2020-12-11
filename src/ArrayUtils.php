@@ -10,6 +10,7 @@ namespace theodorejb\ArrayUtils;
 function contains_all(array $needles, array $haystack): bool
 {
     // return false if any of the needles aren't in the haystack
+    /** @var mixed $needle */
     foreach ($needles as $needle) {
         if (!in_array($needle, $haystack, true)) {
             return false;
@@ -31,6 +32,8 @@ function contains_same(array $a, array $b): bool
 /**
  * Splits the array of rows into groups when the specified column value changes.
  * Note that the rows must be sorted by the column used to divide results.
+ * @param iterable<mixed, array<string, mixed>> $rows
+ * @return \Generator<int, list<array<string, mixed>>>
  */
 function group_rows(iterable $rows, string $groupColumn): \Generator
 {
@@ -46,6 +49,7 @@ function group_rows(iterable $rows, string $groupColumn): \Generator
             }
 
             $itemSet = [$row]; // start over
+            /** @var mixed $divideColVal */
             $divideColVal = $row[$groupColumn];
         } else {
             // same set of items

@@ -7,7 +7,7 @@ use theodorejb\ArrayUtils;
 
 class ArrayUtilsTest extends TestCase
 {
-    public function testContainsAll()
+    public function testContainsAll(): void
     {
         // order shouldn't matter
         $this->assertTrue(ArrayUtils\contains_all([1, 2], [3, 2, 1]));
@@ -18,7 +18,7 @@ class ArrayUtilsTest extends TestCase
         $this->assertFalse(ArrayUtils\contains_all([1, 2], [1]));
     }
 
-    public function testContainsSame()
+    public function testContainsSame(): void
     {
         // order shouldn't matter
         $this->assertTrue(ArrayUtils\contains_same([1, 2], [2, 1]));
@@ -26,7 +26,7 @@ class ArrayUtilsTest extends TestCase
         $this->assertFalse(ArrayUtils\contains_same([1, 2], [3, 2, 1]));
     }
 
-    public function testGroupRows()
+    public function testGroupRows(): void
     {
         // an array retrieved by joining people and pets tables
         $peoplePets = [
@@ -52,7 +52,7 @@ class ArrayUtilsTest extends TestCase
         $this->assertSame($expected, $actual);
     }
 
-    public function testGroupRowsFalsyGroupValues()
+    public function testGroupRowsFalsyGroupValues(): void
     {
         $rows = [
             ['name' => null, 'petName' => 'Blackie'],
@@ -81,7 +81,7 @@ class ArrayUtilsTest extends TestCase
         $this->assertSame($expected, $actual);
     }
 
-    public function testGroupRowsEmptyArray()
+    public function testGroupRowsEmptyArray(): void
     {
         $this->expectNotToPerformAssertions();
 
@@ -90,9 +90,9 @@ class ArrayUtilsTest extends TestCase
         }
     }
 
-    public function testGroupRowsTraversable()
+    public function testGroupRowsTraversable(): void
     {
-        $generate = function () {
+        $generate = function (): Generator {
             for ($i = 0; $i < 4; $i++) {
                 $set = $i < 2 ? 1 : 2;
                 yield ['set' => $set, 'i' => $i];

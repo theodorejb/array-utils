@@ -27,4 +27,3 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [1.1.0]: https://github.com/theodorejb/array-utils/compare/v1.0.1...v1.1.0
 [1.0.1]: https://github.com/theodorejb/array-utils/compare/v1.0.0...v1.0.1
 [1.0.0]: https://github.com/theodorejb/array-utils/tree/v1.0.0
-

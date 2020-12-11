@@ -1,6 +1,6 @@
 # ArrayUtils
 
-[![Packagist Version](https://img.shields.io/packagist/v/theodorejb/array-utils.svg)](https://packagist.org/packages/theodorejb/array-utils) [![License](https://img.shields.io/packagist/l/theodorejb/array-utils.svg)](https://packagist.org/packages/theodorejb/array-utils) [![Build Status](https://travis-ci.org/theodorejb/array-utils.svg?branch=master)](https://travis-ci.org/theodorejb/array-utils)
+[![Packagist Version](https://img.shields.io/packagist/v/theodorejb/array-utils.svg)](https://packagist.org/packages/theodorejb/array-utils)
 
 ArrayUtils is a collection of useful PHP array functions.
 
