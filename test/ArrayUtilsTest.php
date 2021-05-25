@@ -85,7 +85,7 @@ class ArrayUtilsTest extends TestCase
     {
         $this->expectNotToPerformAssertions();
 
-        foreach (ArrayUtils\group_rows([], 'test') as $group) {
+        foreach (ArrayUtils\group_rows([], 'test') as $_group) {
             $this->fail('Empty array incorrectly resulted in yield');
         }
     }
