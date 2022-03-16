@@ -32,8 +32,9 @@ function contains_same(array $a, array $b): bool
 /**
  * Splits the array of rows into groups when the specified column value changes.
  * Note that the rows must be sorted by the column used to divide results.
- * @param iterable<mixed, array<string, mixed>> $rows
- * @return \Generator<int, list<array<string, mixed>>>
+ * @template T of array<string, mixed>
+ * @param iterable<mixed, T> $rows
+ * @return \Generator<int, list<T>>
  */
 function group_rows(iterable $rows, string $groupColumn): \Generator
 {

@@ -50,6 +50,14 @@ class ArrayUtilsTest extends TestCase
         }
 
         $this->assertSame($expected, $actual);
+        $names = [];
+
+        foreach (ArrayUtils\group_rows($peoplePets, 'petName') as $group) {
+            $names[] = $group[0]['name'];
+        }
+
+        $expected = ['Jack', 'Jack', 'Jack', 'Amy', 'Amy'];
+        $this->assertSame($expected, $names);
     }
 
     public function testGroupRowsFalsyGroupValues(): void
