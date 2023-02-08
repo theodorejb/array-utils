@@ -126,4 +126,135 @@ class ArrayUtilsTest extends TestCase
 
         $this->assertSame($expected, $groups);
     }
+
+    public function testRequireStrKey(): void
+    {
+        $this->assertSame('v', ArrayUtils\require_str_key(['k' => 'v'], 'k'));
+
+        try {
+            ArrayUtils\require_str_key([], 'foo');
+            $this->fail('Failed to throw exception for missing key');
+        } catch (OutOfBoundsException $e) {
+            $this->assertSame('Missing required key: foo', $e->getMessage());
+        }
+
+        try {
+            ArrayUtils\require_str_key(['k' => 1], 'k');
+            $this->fail('Failed to throw exception for incorrect type');
+        } catch (UnexpectedValueException $e) {
+            $this->assertSame('k value must be a string, integer given', $e->getMessage());
+        }
+    }
+
+    public function testGetOptionalStrKey(): void
+    {
+        $this->assertSame('v', ArrayUtils\get_optional_str_key(['k' => 'v'], 'k'));
+        $this->assertNull(ArrayUtils\get_optional_str_key([], 'missing'));
+
+        try {
+            ArrayUtils\get_optional_str_key(['k' => 1.1], 'k');
+            $this->fail('Failed to throw exception for incorrect type');
+        } catch (UnexpectedValueException $e) {
+            $this->assertSame('k value must be a string, double given', $e->getMessage());
+        }
+    }
+
+    public function testRequireNumericKey(): void
+    {
+        $data = ['quantity' => 2, 'amount' => 5.95];
+        $this->assertSame(2.0, ArrayUtils\require_numeric_key($data, 'quantity'));
+        $this->assertSame(5.95, ArrayUtils\require_numeric_key($data, 'amount'));
+
+        try {
+            ArrayUtils\require_numeric_key($data, 'bar');
+            $this->fail('Failed to throw exception for missing key');
+        } catch (OutOfBoundsException $e) {
+            $this->assertSame('Missing required key: bar', $e->getMessage());
+        }
+
+        try {
+            ArrayUtils\require_numeric_key(['k' => '1'], 'k');
+            $this->fail('Failed to throw exception for incorrect type');
+        } catch (UnexpectedValueException $e) {
+            $this->assertSame('k value must be a number, string given', $e->getMessage());
+        }
+    }
+
+    public function testGetOptionalNumericKey(): void
+    {
+        $this->assertSame(1.2, ArrayUtils\get_optional_numeric_key(['k' => 1.2], 'k'));
+        $this->assertNull(ArrayUtils\get_optional_numeric_key([], 'missing'));
+
+        try {
+            ArrayUtils\get_optional_numeric_key(['foo' => true], 'foo');
+            $this->fail('Failed to throw exception for incorrect type');
+        } catch (UnexpectedValueException $e) {
+            $this->assertSame('foo value must be a number, boolean given', $e->getMessage());
+        }
+    }
+
+    public function testRequireIntKey(): void
+    {
+        $this->assertSame(1, ArrayUtils\require_int_key(['k' => 1], 'k'));
+
+        try {
+            ArrayUtils\require_int_key([], 'baz');
+            $this->fail('Failed to throw exception for missing key');
+        } catch (OutOfBoundsException $e) {
+            $this->assertSame('Missing required key: baz', $e->getMessage());
+        }
+
+        try {
+            ArrayUtils\require_int_key(['k' => '1'], 'k');
+            $this->fail('Failed to throw exception for incorrect type');
+        } catch (UnexpectedValueException $e) {
+            $this->assertSame('k value must be an integer, string given', $e->getMessage());
+        }
+    }
+
+    public function testGetOptionalIntKey(): void
+    {
+        $this->assertSame(2, ArrayUtils\get_optional_int_key(['k' => 2], 'k'));
+        $this->assertNull(ArrayUtils\get_optional_int_key([], 'missing'));
+
+        try {
+            ArrayUtils\get_optional_int_key(['k' => 1.1], 'k');
+            $this->fail('Failed to throw exception for incorrect type');
+        } catch (UnexpectedValueException $e) {
+            $this->assertSame('k value must be an integer, double given', $e->getMessage());
+        }
+    }
+
+    public function testRequireBoolKey(): void
+    {
+        $this->assertTrue(ArrayUtils\require_bool_key(['k' => true], 'k'));
+        $this->assertFalse(ArrayUtils\require_bool_key(['k' => false], 'k'));
+
+        try {
+            ArrayUtils\require_bool_key([], 'fizz');
+            $this->fail('Failed to throw exception for missing key');
+        } catch (OutOfBoundsException $e) {
+            $this->assertSame('Missing required key: fizz', $e->getMessage());
+        }
+
+        try {
+            ArrayUtils\require_bool_key(['k' => 1], 'k');
+            $this->fail('Failed to throw exception for incorrect type');
+        } catch (UnexpectedValueException $e) {
+            $this->assertSame('k value must be a boolean, integer given', $e->getMessage());
+        }
+    }
+
+    public function testGetOptionalBoolKey(): void
+    {
+        $this->assertSame(true, ArrayUtils\get_optional_bool_key(['k' => true], 'k'));
+        $this->assertNull(ArrayUtils\get_optional_bool_key([], 'missing'));
+
+        try {
+            ArrayUtils\get_optional_bool_key(['k' => []], 'k');
+            $this->fail('Failed to throw exception for incorrect type');
+        } catch (UnexpectedValueException $e) {
+            $this->assertSame('k value must be a boolean, array given', $e->getMessage());
+        }
+    }
 }
