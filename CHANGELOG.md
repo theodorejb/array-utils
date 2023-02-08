@@ -6,19 +6,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [1.2.0] - 2023-02-08
+## [2.0.0] - 2023-02-08
 ### Added
-- New set of functions for retrieving and validating array key types:
-  - `require_str_key`
-  - `get_optional_str_key`
-  - `require_numeric_key`
-  - `get_optional_numeric_key`
-  - `require_int_key`
-  - `get_optional_int_key`
-  - `require_bool_key`
-  - `get_optional_bool_key`
+- New set of methods for retrieving and validating array key types:
+  - `requireStrKey`
+  - `getOptionalStrKey`
+  - `requireNumericKey`
+  - `getOptionalNumericKey`
+  - `requireIntKey`
+  - `getOptionalIntKey`
+  - `requireBoolKey`
+  - `getOptionalBoolKey`
 
 ### Changed
+- Moved all functions to static methods in an `ArrayUtils` class for easier usage.
 - PHP 7.4+ is now required.
 
 ## [1.1.2] - 2022-03-16
@@ -42,8 +43,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.0.0] - 2016-01-13
 - Initial release
 
-[Unreleased]: https://github.com/theodorejb/array-utils/compare/v1.2.0...HEAD
-[1.2.0]: https://github.com/theodorejb/array-utils/compare/v1.1.2...v1.2.0
+[Unreleased]: https://github.com/theodorejb/array-utils/compare/v2.0.0...HEAD
+[2.0.0]: https://github.com/theodorejb/array-utils/compare/v1.1.2...v2.0.0
 [1.1.2]: https://github.com/theodorejb/array-utils/compare/v1.1.1...v1.1.2
 [1.1.1]: https://github.com/theodorejb/array-utils/compare/v1.1.0...v1.1.1
 [1.1.0]: https://github.com/theodorejb/array-utils/compare/v1.0.1...v1.1.0

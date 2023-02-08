@@ -8,41 +8,41 @@ ArrayUtils is a collection of useful PHP array functions.
 
 `composer require theodorejb/array-utils`
 
-## Functions
+## Methods
 
-### contains_all
+### containsAll
 
 Returns true if all the needles are in the haystack.
 
 ```php
-use function theodorejb\ArrayUtils\contains_all;
+use theodorejb\ArrayUtils\ArrayUtils;
 
 $haystack = [1, 2, 3, 5, 8, 13];
 $needles = [2, 13, 5];
-contains_all($needles, $haystack); // true
-contains_all($haystack, $needles); // false
+ArrayUtils::containsAll($needles, $haystack); // true
+ArrayUtils::containsAll($haystack, $needles); // false
 ```
 
-### contains_same
+### containsSame
 
 Returns true if both arrays contain the same values (regardless of order).
 
 ```php
-use function theodorejb\ArrayUtils\contains_same;
+use theodorejb\ArrayUtils\ArrayUtils;
 
 $set1 = [1, 3, 5, 7];
 $set2 = [3, 7, 5, 1];
 
-contains_same($set1, $set2); // true
+ArrayUtils::containsSame($set1, $set2); // true
 ```
 
-### group_rows
+### groupRows
 
 Splits the iterable of associative arrays into groups when the specified key
 value changes. The iterable must be sorted by the array key used to group results.
 
 ```php
-use function theodorejb\ArrayUtils\group_rows;
+use theodorejb\ArrayUtils\ArrayUtils;
 
 // obtained by joining tables of people and their pets
 $peoplePets = [
@@ -55,7 +55,7 @@ $peoplePets = [
 
 $grouped = [];
 
-foreach (group_rows($peoplePets, 'name') as $group) {
+foreach (ArrayUtils::groupRows($peoplePets, 'name') as $group) {
     $grouped[] = $group;
 }
 
@@ -74,114 +74,114 @@ $expected = [
 var_dump($grouped === $expected); // bool(true)
 ```
 
-### require_str_key
+### requireStrKey
 
 Returns the specified array key value if it is a string. Throws an exception otherwise.
 
 ```php
-use function theodorejb\ArrayUtils\require_str_key;
+use theodorejb\ArrayUtils\ArrayUtils;
 
 $data = ['k' => 'val', 'i' => 1];
-require_str_key($data, 'k'); // val
-require_str_key($data, 'x'); // throws OutOfBoundsException
-require_str_key($data, 'i'); // throws UnexpectedValueException
+ArrayUtils::requireStrKey($data, 'k'); // val
+ArrayUtils::requireStrKey($data, 'x'); // throws OutOfBoundsException
+ArrayUtils::requireStrKey($data, 'i'); // throws UnexpectedValueException
 ```
 
-### get_optional_str_key
+### getOptionalStrKey
 
 Returns the specified array key value if it is a string, or `null` if the array key doesn't exist.
 Throws an exception if the key exists but the value is not a string.
 
 ```php
-use function theodorejb\ArrayUtils\get_optional_str_key;
+use theodorejb\ArrayUtils\ArrayUtils;
 
 $data = ['k' => 'val', 'i' => 1];
-get_optional_str_key($data, 'k'); // val
-get_optional_str_key($data, 'x'); // null
-get_optional_str_key($data, 'i'); // throws UnexpectedValueException
+ArrayUtils::getOptionalStrKey($data, 'k'); // val
+ArrayUtils::getOptionalStrKey($data, 'x'); // null
+ArrayUtils::getOptionalStrKey($data, 'i'); // throws UnexpectedValueException
 ```
 
-### require_numeric_key
+### requireNumericKey
 
 Returns the specified array key value as a float if it is an integer or float. Throws an exception otherwise.
 
 ```php
-use function theodorejb\ArrayUtils\require_numeric_key;
+use theodorejb\ArrayUtils\ArrayUtils;
 
 $data = ['i' => 1, 'f' => 0.5, 'k' => 'val'];
-require_numeric_key($data, 'i'); // 1.0
-require_numeric_key($data, 'f'); // 0.5
-require_numeric_key($data, 'x'); // throws OutOfBoundsException
-require_numeric_key($data, 'k'); // throws UnexpectedValueException
+ArrayUtils::requireNumericKey($data, 'i'); // 1.0
+ArrayUtils::requireNumericKey($data, 'f'); // 0.5
+ArrayUtils::requireNumericKey($data, 'x'); // throws OutOfBoundsException
+ArrayUtils::requireNumericKey($data, 'k'); // throws UnexpectedValueException
 ```
 
-### get_optional_numeric_key
+### getOptionalNumericKey
 
 Returns the specified array key value as a float if it is an integer or float, or `null` if the array key doesn't exist.
 Throws an exception if the key exists but the value is not an integer or float.
 
 ```php
-use function theodorejb\ArrayUtils\get_optional_numeric_key;
+use theodorejb\ArrayUtils\ArrayUtils;
 
 $data = ['i' => 2, 'f' => 0.5, 'k' => 'val'];
-get_optional_numeric_key($data, 'i'); // 2.0
-get_optional_numeric_key($data, 'f'); // 0.5
-get_optional_numeric_key($data, 'x'); // null
-get_optional_numeric_key($data, 'k'); // throws UnexpectedValueException
+ArrayUtils::getOptionalNumericKey($data, 'i'); // 2.0
+ArrayUtils::getOptionalNumericKey($data, 'f'); // 0.5
+ArrayUtils::getOptionalNumericKey($data, 'x'); // null
+ArrayUtils::getOptionalNumericKey($data, 'k'); // throws UnexpectedValueException
 ```
 
-### require_int_key
+### requireIntKey
 
 Returns the specified array key value if it is an integer. Throws an exception otherwise.
 
 ```php
-use function theodorejb\ArrayUtils\require_int_key;
+use theodorejb\ArrayUtils\ArrayUtils;
 
 $data = ['k' => 'val', 'i' => 1];
-require_int_key($data, 'i'); // 1
-require_int_key($data, 'x'); // throws OutOfBoundsException
-require_int_key($data, 'k'); // throws UnexpectedValueException
+ArrayUtils::requireIntKey($data, 'i'); // 1
+ArrayUtils::requireIntKey($data, 'x'); // throws OutOfBoundsException
+ArrayUtils::requireIntKey($data, 'k'); // throws UnexpectedValueException
 ```
 
-### get_optional_int_key
+### getOptionalIntKey
 
 Returns the specified array key value if it is an integer, or `null` if the array key doesn't exist.
 Throws an exception if the key exists but the value is not an integer.
 
 ```php
-use function theodorejb\ArrayUtils\get_optional_int_key;
+use theodorejb\ArrayUtils\ArrayUtils;
 
 $data = ['k' => 'val', 'i' => 2];
-get_optional_int_key($data, 'i'); // 2
-get_optional_int_key($data, 'x'); // null
-get_optional_int_key($data, 'k'); // throws UnexpectedValueException
+ArrayUtils::getOptionalIntKey($data, 'i'); // 2
+ArrayUtils::getOptionalIntKey($data, 'x'); // null
+ArrayUtils::getOptionalIntKey($data, 'k'); // throws UnexpectedValueException
 ```
 
-### require_bool_key
+### requireBoolKey
 
 Returns the specified array key value if it is a boolean. Throws an exception otherwise.
 
 ```php
-use function theodorejb\ArrayUtils\require_bool_key;
+use theodorejb\ArrayUtils\ArrayUtils;
 
 $data = ['k' => 'val', 'b' => true];
-require_bool_key($data, 'b'); // true
-require_bool_key($data, 'x'); // throws OutOfBoundsException
-require_bool_key($data, 'k'); // throws UnexpectedValueException
+ArrayUtils::requireBoolKey($data, 'b'); // true
+ArrayUtils::requireBoolKey($data, 'x'); // throws OutOfBoundsException
+ArrayUtils::requireBoolKey($data, 'k'); // throws UnexpectedValueException
 ```
 
-### get_optional_bool_key
+### getOptionalBoolKey
 
 Returns the specified array key value if it is a boolean, or `null` if the array key doesn't exist.
 Throws an exception if the key exists but the value is not a boolean.
 
 ```php
-use function theodorejb\ArrayUtils\get_optional_bool_key;
+use theodorejb\ArrayUtils\ArrayUtils;
 
 $data = ['k' => 'val', 'b' => false];
-get_optional_bool_key($data, 'b'); // false
-get_optional_bool_key($data, 'x'); // null
-get_optional_bool_key($data, 'k'); // throws UnexpectedValueException
+ArrayUtils::getOptionalBoolKey($data, 'b'); // false
+ArrayUtils::getOptionalBoolKey($data, 'x'); // null
+ArrayUtils::getOptionalBoolKey($data, 'k'); // throws UnexpectedValueException
 ```
 
 ## Author
