@@ -38,37 +38,49 @@ ArrayUtils::containsSame($set1, $set2); // true
 
 ### groupRows
 
-Splits the iterable of associative arrays into groups when the specified key
-value changes. The iterable must be sorted by the array key used to group results.
+Splits the iterable of arrays into groups when the value of one or more keys changes.
+The iterable must be sorted by the array keys used to group results.
 
 ```php
 use theodorejb\ArrayUtils\ArrayUtils;
 
-// obtained by joining tables of people and their pets
 $peoplePets = [
-    ['name' => 'Jack', 'petName' => 'Scruffy'],
-    ['name' => 'Jack', 'petName' => 'Spot'],
-    ['name' => 'Jack', 'petName' => 'Paws'],
-    ['name' => 'Amy', 'petName' => 'Blackie'],
-    ['name' => 'Amy', 'petName' => 'Whiskers']
+    ['lName' => 'Jordan', 'fName' => 'Jack', 'pet' => 'Scruffy'],
+    ['lName' => 'Jordan', 'fName' => 'Jack', 'pet' => 'Spot'],
+    ['lName' => 'Jordan', 'fName' => 'Jill', 'pet' => 'Paws'],
+    ['lName' => 'Greene', 'fName' => 'Amy',  'pet' => 'Blackie'],
+    ['lName' => 'Greene', 'fName' => 'Amy',  'pet' => 'Whiskers'],
+    ['lName' => 'Greene', 'fName' => 'Amy',  'pet' => 'Paws'],
+    ['lName' => 'Smith',  'fName' => 'Amy',  'pet' => 'Tiger'],
 ];
 
 $grouped = [];
 
-foreach (ArrayUtils::groupRows($peoplePets, 'name') as $group) {
+foreach (ArrayUtils::groupRows($peoplePets, 'fName') as $group) {
     $grouped[] = $group;
 }
 
 $expected = [
-    [
-        $peoplePets[0],
-        $peoplePets[1],
-        $peoplePets[2],
-    ],
-    [
-        $peoplePets[3],
-        $peoplePets[4],
-    ]
+    [$peoplePets[0], $peoplePets[1]],
+    [$peoplePets[2]],
+    [$peoplePets[3], $peoplePets[4], $peoplePets[5], $peoplePets[6]],
+];
+
+var_dump($grouped === $expected); // bool(true)
+
+////// Additional arguments can be passed to `groupRows` to group by more than one column:
+
+$grouped = [];
+
+foreach (ArrayUtils::groupRows($peoplePets, 'lName', 'fName') as $group) {
+    $grouped[] = $group;
+}
+
+$expected = [
+    [$peoplePets[0], $peoplePets[1]],
+    [$peoplePets[2]],
+    [$peoplePets[3], $peoplePets[4], $peoplePets[5]],
+    [$peoplePets[6]],
 ];
 
 var_dump($grouped === $expected); // bool(true)

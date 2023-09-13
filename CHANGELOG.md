@@ -6,6 +6,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.1.0] - 2023-09-13
+### Added
+- `groupRows` now supports grouping by multiple columns.
+- Integer array keys can now be used for row grouping.
+
+### Changed
+- PHP 8.1+ is now required.
+
 ## [2.0.0] - 2023-02-08
 ### Added
 - New set of methods for retrieving and validating array key types:
@@ -43,7 +51,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.0.0] - 2016-01-13
 - Initial release
 
-[Unreleased]: https://github.com/theodorejb/array-utils/compare/v2.0.0...HEAD
+[Unreleased]: https://github.com/theodorejb/array-utils/compare/v2.1.0...HEAD
+[2.1.0]: https://github.com/theodorejb/array-utils/compare/v2.0.0...v2.1.0
 [2.0.0]: https://github.com/theodorejb/array-utils/compare/v1.1.2...v2.0.0
 [1.1.2]: https://github.com/theodorejb/array-utils/compare/v1.1.1...v1.1.2
 [1.1.1]: https://github.com/theodorejb/array-utils/compare/v1.1.0...v1.1.1

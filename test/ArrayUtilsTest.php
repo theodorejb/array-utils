@@ -12,6 +12,20 @@ use theodorejb\ArrayUtils\ArrayUtils;
 
 class ArrayUtilsTest extends TestCase
 {
+    /**
+     * An array retrieved by joining people and pets tables
+     * @var list<array{lName: string, fName: string, pet: string}>
+     */
+    private array $peoplePets = [
+        ['lName' => 'Jordan', 'fName' => 'Jack', 'pet' => 'Scruffy'],
+        ['lName' => 'Jordan', 'fName' => 'Jack', 'pet' => 'Spot'],
+        ['lName' => 'Jordan', 'fName' => 'Jill', 'pet' => 'Paws'],
+        ['lName' => 'Greene', 'fName' => 'Amy',  'pet' => 'Blackie'],
+        ['lName' => 'Greene', 'fName' => 'Amy',  'pet' => 'Whiskers'],
+        ['lName' => 'Greene', 'fName' => 'Amy',  'pet' => 'Paws'],
+        ['lName' => 'Smith',  'fName' => 'Amy',  'pet' => 'Tiger'],
+    ];
+
     public function testContainsAll(): void
     {
         // order shouldn't matter
@@ -33,35 +47,29 @@ class ArrayUtilsTest extends TestCase
 
     public function testGroupRows(): void
     {
-        // an array retrieved by joining people and pets tables
-        $peoplePets = [
-            ['name' => 'Jack', 'petName' => 'Scruffy'],
-            ['name' => 'Jack', 'petName' => 'Spot'],
-            ['name' => 'Jack', 'petName' => 'Paws'],
-            ['name' => 'Amy', 'petName' => 'Blackie'],
-            ['name' => 'Amy', 'petName' => 'Whiskers']
-        ];
+        $peoplePets = $this->peoplePets;
 
-        // the expected array grouped by name
+        // the expected array grouped by first name
         $expected = [
-            [$peoplePets[0], $peoplePets[1], $peoplePets[2]],
-            [$peoplePets[3], $peoplePets[4]],
+            [$peoplePets[0], $peoplePets[1]],
+            [$peoplePets[2]],
+            [$peoplePets[3], $peoplePets[4], $peoplePets[5], $peoplePets[6]],
         ];
 
         $actual = [];
 
-        foreach (ArrayUtils::groupRows($peoplePets, 'name') as $group) {
+        foreach (ArrayUtils::groupRows($peoplePets, 'fName') as $group) {
             $actual[] = $group;
         }
 
         $this->assertSame($expected, $actual);
         $names = [];
 
-        foreach (ArrayUtils::groupRows($peoplePets, 'petName') as $group) {
-            $names[] = $group[0]['name'];
+        foreach (ArrayUtils::groupRows($peoplePets, 'pet') as $group) {
+            $names[] = $group[0]['fName'];
         }
 
-        $expected = ['Jack', 'Jack', 'Jack', 'Amy', 'Amy'];
+        $expected = ['Jack', 'Jack', 'Jill', 'Amy', 'Amy', 'Amy', 'Amy'];
         $this->assertSame($expected, $names);
     }
 
@@ -130,6 +138,61 @@ class ArrayUtilsTest extends TestCase
         ];
 
         $this->assertSame($expected, $groups);
+    }
+
+    public function testGroupRowsIntKey(): void
+    {
+        // an array retrieved by joining people and pets tables
+        $peoplePets = [
+            ['Jack', 'Scruffy'],
+            ['Jack', 'Spot'],
+            ['Jack', 'Paws'],
+            ['Amy', 'Blackie'],
+            ['Amy', 'Whiskers']
+        ];
+
+        // the expected array grouped by name
+        $expected = [
+            [$peoplePets[0], $peoplePets[1], $peoplePets[2]],
+            [$peoplePets[3], $peoplePets[4]],
+        ];
+
+        $actual = [];
+
+        foreach (ArrayUtils::groupRows($peoplePets, 0) as $group) {
+            $actual[] = $group;
+        }
+
+        $this->assertSame($expected, $actual);
+        $names = [];
+
+        foreach (ArrayUtils::groupRows($peoplePets, 1) as $group) {
+            $names[] = $group[0][0];
+        }
+
+        $expected = ['Jack', 'Jack', 'Jack', 'Amy', 'Amy'];
+        $this->assertSame($expected, $names);
+    }
+
+    public function testGroupRowsTwoColumns(): void
+    {
+        $peoplePets = $this->peoplePets;
+
+        // the expected array grouped by last and first name
+        $expected = [
+            [$peoplePets[0], $peoplePets[1]],
+            [$peoplePets[2]],
+            [$peoplePets[3], $peoplePets[4], $peoplePets[5]],
+            [$peoplePets[6]],
+        ];
+
+        $actual = [];
+
+        foreach (ArrayUtils::groupRows($peoplePets, 'lName', 'fName') as $group) {
+            $actual[] = $group;
+        }
+
+        $this->assertSame($expected, $actual);
     }
 
     public function testRequireStrKey(): void

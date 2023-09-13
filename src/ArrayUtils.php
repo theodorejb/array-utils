@@ -36,28 +36,38 @@ class ArrayUtils
     }
 
     /**
-     * Splits the array of rows into groups when the specified column value changes.
-     * Note that the rows must be sorted by the column used to divide results.
-     * @template T of array<string, mixed>
-     * @param iterable<mixed, T> $rows
+     * Splits the rows into groups when the specified column values change.
+     * Note that the rows must be sorted by the columns used to group results.
+     * @template T of array
+     * @param iterable<T> $rows
      * @return Generator<int, list<T>>
      */
-    public static function groupRows(iterable $rows, string $groupColumn): Generator
+    public static function groupRows(iterable $rows, string|int ...$groupBy): Generator
     {
-        $divideColVal = null;
+        $groupColVals = array_fill_keys($groupBy, null);
         $itemSet = [];
 
         foreach ($rows as $row) {
-            if ($divideColVal !== $row[$groupColumn]) {
-                // new set of items
+            $newSet = false;
 
+            /** @var mixed $val */
+            foreach ($groupColVals as $col => $val) {
+                /** @var mixed $rowVal */
+                $rowVal = $row[$col];
+
+                if ($val !== $rowVal) {
+                    $newSet = true;
+                    /** @psalm-suppress MixedAssignment */
+                    $groupColVals[$col] = $rowVal;
+                }
+            }
+
+            if ($newSet) {
                 if (!empty($itemSet)) {
                     yield $itemSet; // yield previous set
                 }
 
                 $itemSet = [$row]; // start over
-                /** @var mixed $divideColVal */
-                $divideColVal = $row[$groupColumn];
             } else {
                 // same set of items
                 $itemSet[] = $row;
