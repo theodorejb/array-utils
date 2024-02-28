@@ -195,6 +195,42 @@ class ArrayUtilsTest extends TestCase
         $this->assertSame($expected, $actual);
     }
 
+    public function testGetSafeInteger(): void
+    {
+        $array = [
+            'actualInt' => 1,
+            'strInt' => '1',
+            'unsafeInt' => '01234',
+            'badStr' => 'foo',
+            'myFloat' => 1.0,
+        ];
+
+        $this->assertSame(1, ArrayUtils::getSafeInteger($array, 'actualInt'));
+        $this->assertSame(1, ArrayUtils::getSafeInteger($array, 'strInt'));
+        $this->assertNull(ArrayUtils::getSafeInteger($array, 'nonexistent'));
+
+        try {
+            ArrayUtils::getSafeInteger($array, 'unsafeInt');
+            $this->fail('Failed to throw exception for unsafe int string');
+        } catch (\Exception $e) {
+            $this->assertSame('unsafeInt value must be an integer, string given', $e->getMessage());
+        }
+
+        try {
+            ArrayUtils::getSafeInteger($array, 'badStr');
+            $this->fail('Failed to throw exception for invalid key type');
+        } catch (\Exception $e) {
+            $this->assertSame('badStr value must be an integer, string given', $e->getMessage());
+        }
+
+        try {
+            ArrayUtils::getSafeInteger($array, 'myFloat');
+            $this->fail('Failed to throw exception for invalid key type');
+        } catch (\Exception $e) {
+            $this->assertSame('myFloat value must be an integer, float given', $e->getMessage());
+        }
+    }
+
     public function testRequireStrKey(): void
     {
         $this->assertSame('v', ArrayUtils::requireStrKey(['k' => 'v'], 'k'));

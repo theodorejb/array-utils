@@ -86,6 +86,22 @@ $expected = [
 var_dump($grouped === $expected); // bool(true)
 ```
 
+### getSafeInteger
+
+If the specified array key value is an integer or a string which can be cast to an integer
+without data loss, returns the value as an int. Returns null if the array key doesn't exist.
+Throws an exception if the key exists but the value cannot be safely cast to an integer.
+
+```php
+use theodorejb\ArrayUtils\ArrayUtils;
+
+$data = ['i' => 1, 's' => '42', 'k' => 'val'];
+ArrayUtils::getSafeInteger($data, 'i'); // 1
+ArrayUtils::getSafeInteger($data, 's'); // 42
+ArrayUtils::getSafeInteger($data, 'x'); // null
+ArrayUtils::getSafeInteger($data, 'k'); // throws UnexpectedValueException
+```
+
 ### requireStrKey
 
 Returns the specified array key value if it is a string. Throws an exception otherwise.

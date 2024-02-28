@@ -80,6 +80,34 @@ class ArrayUtils
     }
 
     /**
+     * If the specified array key value is an integer or a string which can be cast to an integer
+     * without data loss, returns the value as an int. Returns null if the array key doesn't exist.
+     * @throws UnexpectedValueException If the array value cannot be safely cast to an integer.
+     */
+    public static function getSafeInteger(array $data, string $key): ?int
+    {
+        if (!isset($data[$key])) {
+            return null;
+        }
+
+        /** @psalm-suppress MixedAssignment */
+        $value = $data[$key];
+
+        if (is_int($value)) {
+            return $value;
+        }
+
+        if (is_string($value)) {
+            if ((string) (int) $value === $value) {
+                return (int) $value;
+            }
+        }
+
+        $type = get_debug_type($data[$key]);
+        throw new UnexpectedValueException("$key value must be an integer, $type given");
+    }
+
+    /**
      * Returns the specified array key value if it is a string.
      * @throws OutOfBoundsException If the array key does not exist.
      * @throws UnexpectedValueException If the array value is not a string.
