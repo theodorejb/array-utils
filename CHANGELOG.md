@@ -1,10 +1,12 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
-The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [2.1.1] - 2025-05-16
+### Changed
+- Improved `groupRows` return type to clarify that the generator yields non-empty lists.
 
 ## [2.1.0] - 2023-09-13
 ### Added
@@ -51,7 +53,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.0.0] - 2016-01-13
 - Initial release
 
-[Unreleased]: https://github.com/theodorejb/array-utils/compare/v2.1.0...HEAD
+[2.1.1]: https://github.com/theodorejb/array-utils/compare/v2.1.0...v2.1.1
 [2.1.0]: https://github.com/theodorejb/array-utils/compare/v2.0.0...v2.1.0
 [2.0.0]: https://github.com/theodorejb/array-utils/compare/v1.1.2...v2.0.0
 [1.1.2]: https://github.com/theodorejb/array-utils/compare/v1.1.1...v1.1.2
