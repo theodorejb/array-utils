@@ -12,11 +12,12 @@ class ArrayUtils
 {
     /**
      * Returns true if all the needles are in the haystack
+     * @param array<mixed> $needles
+     * @param array<mixed> $haystack
      */
     public static function containsAll(array $needles, array $haystack): bool
     {
         // return false if any of the needles aren't in the haystack
-        /** @var mixed $needle */
         foreach ($needles as $needle) {
             if (!in_array($needle, $haystack, true)) {
                 return false;
@@ -29,6 +30,8 @@ class ArrayUtils
     /**
      * Returns true if the two arrays contain exactly the same values
      * (not necessarily in the same order)
+     * @param array<mixed> $a
+     * @param array<mixed> $b
      */
     public static function containsSame(array $a, array $b): bool
     {
@@ -38,9 +41,9 @@ class ArrayUtils
     /**
      * Splits the rows into groups when the specified column values change.
      * Note that the rows must be sorted by the columns used to group results.
-     * @template T of array
+     * @template T of array<mixed>
      * @param iterable<T> $rows
-     * @return Generator<int, list<T>>
+     * @return Generator<int, non-empty-list<T>>
      */
     public static function groupRows(iterable $rows, string|int ...$groupBy): Generator
     {
@@ -50,14 +53,11 @@ class ArrayUtils
         foreach ($rows as $row) {
             $newSet = false;
 
-            /** @var mixed $val */
             foreach ($groupColVals as $col => $val) {
-                /** @var mixed $rowVal */
                 $rowVal = $row[$col];
 
                 if ($val !== $rowVal) {
                     $newSet = true;
-                    /** @psalm-suppress MixedAssignment */
                     $groupColVals[$col] = $rowVal;
                 }
             }
@@ -81,6 +81,7 @@ class ArrayUtils
 
     /**
      * Returns the specified array key value if it is a string.
+     * @param array<mixed> $data
      * @throws OutOfBoundsException If the array key does not exist.
      * @throws UnexpectedValueException If the array value is not a string.
      */
@@ -100,6 +101,7 @@ class ArrayUtils
 
     /**
      * Returns the specified array key value if it is a string, or null if the array key doesn't exist.
+     * @param array<mixed> $data
      * @throws UnexpectedValueException If the array value is not a string.
      */
     public static function getOptionalStrKey(array $data, string $key): ?string
@@ -113,6 +115,7 @@ class ArrayUtils
 
     /**
      * Returns the specified array key value if it is an int or float.
+     * @param array<mixed> $data
      * @throws OutOfBoundsException If the array key does not exist.
      * @throws UnexpectedValueException If the array value is not an int or float.
      */
@@ -132,6 +135,7 @@ class ArrayUtils
 
     /**
      * Returns the specified array key value if it is an int or float, or null if the array key doesn't exist.
+     * @param array<mixed> $data
      * @throws UnexpectedValueException If the array value is not an int or float.
      */
     public static function getOptionalNumericKey(array $data, string $key): ?float
@@ -145,6 +149,7 @@ class ArrayUtils
 
     /**
      * Returns the specified array key value if it is an integer.
+     * @param array<mixed> $data
      * @throws OutOfBoundsException If the array key does not exist.
      * @throws UnexpectedValueException If the array value is not an integer.
      */
@@ -164,6 +169,7 @@ class ArrayUtils
 
     /**
      * Returns the specified array key value if it is an integer, or null if the array key doesn't exist.
+     * @param array<mixed> $data
      * @throws UnexpectedValueException If the array value is not an integer.
      */
     public static function getOptionalIntKey(array $data, string $key): ?int
@@ -177,6 +183,7 @@ class ArrayUtils
 
     /**
      * Returns the specified array key value if it is a boolean.
+     * @param array<mixed> $data
      * @throws OutOfBoundsException If the array key does not exist.
      * @throws UnexpectedValueException If the array value is not a boolean.
      */
@@ -196,6 +203,7 @@ class ArrayUtils
 
     /**
      * Returns the specified array key value if it is a boolean, or null if the array key doesn't exist.
+     * @param array<mixed> $data
      * @throws UnexpectedValueException If the array value is not a boolean.
      */
     public static function getOptionalBoolKey(array $data, string $key): ?bool
